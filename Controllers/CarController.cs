@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.ConstrainedExecution;
+using learning_asp.Interface;
 using learning_asp.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +10,11 @@ namespace learning_asp.Controllers
 	[ApiController]
 	public class CarController : ControllerBase
 	{
-		public CarController()
+        private readonly ILog _logger;
+
+		public CarController(ILog logger)
 		{
+            _logger = logger;
 		}
 
 		[HttpGet("All", Name = "GetCars")]
@@ -18,7 +22,9 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<Car>> GetCars()
 		{
-			return Ok(DealershipRepository.Cars);
+            _logger.Log("GetCars");
+
+            return Ok(DealershipRepository.Cars);
 		}
 
 		[HttpGet("{id:int}", Name = "GetCarById")]
@@ -28,7 +34,9 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<Car> GetCarById(int id)
 		{
-			if (id <= 0) 
+            _logger.Log("GetCarById");
+
+            if (id <= 0) 
 				return BadRequest();
 
 			Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarId == id);
@@ -46,7 +54,9 @@ namespace learning_asp.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<Car> GetCarBySku(string sku)
 		{
-			if (string.IsNullOrEmpty(sku))
+            _logger.Log("GetCarBySku");
+
+            if (string.IsNullOrEmpty(sku))
 				return BadRequest();
 
             Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarSku == sku);
@@ -63,8 +73,10 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<bool> DeleteCarById(int id)
+        public ActionResult<Car> DeleteCarById(int id)
         {
+            _logger.Log("DeleteCarById");
+
             if (id <= 0)
                 return BadRequest();
 
@@ -75,8 +87,34 @@ namespace learning_asp.Controllers
 
             DealershipRepository.Cars.Remove(car);
 
-			return Ok(true); 
+			return Ok(car); 
 		}
+
+        [HttpPost("Create", Name = "CreateCar")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<Car> CreateCar([FromBody]Car model)
+        {
+            _logger.Log("CreateCar");
+
+            if (model == null)
+                return BadRequest();
+
+            int carId = DealershipRepository.Cars.LastOrDefault().CarId + 1;
+
+            Car car = new Car
+            {
+                CarId = carId,
+                CarName = model.CarName,
+                CarColour = model.CarColour,
+                CarSku = model.CarSku
+            };
+
+            DealershipRepository.Cars.Add(car);
+
+            return Ok(true);
+        }
 
     }
 }

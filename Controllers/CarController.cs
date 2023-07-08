@@ -15,7 +15,8 @@ namespace learning_asp.Controllers
 
 		[HttpGet("All", Name = "GetCars")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public ActionResult<IEnumerable<Car>> GetCars()
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<IEnumerable<Car>> GetCars()
 		{
 			return Ok(DealershipRepository.Cars);
 		}
@@ -24,6 +25,7 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<Car> GetCarById(int id)
 		{
 			if (id <= 0) 
@@ -41,6 +43,7 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<Car> GetCarBySku(string sku)
 		{
 			if (string.IsNullOrEmpty(sku))
@@ -59,6 +62,7 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<bool> DeleteCarById(int id)
         {
             if (id <= 0)

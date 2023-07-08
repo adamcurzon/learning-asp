@@ -40,7 +40,7 @@ namespace learning_asp.Model
         }
 
         public int? GetCarLastId() {
-            var lastCar = _context.Cars.LastOrDefault();
+            var lastCar = _context.Cars.OrderBy(e => e.Id).LastOrDefault();
 
             if (lastCar == null)
                 return null;

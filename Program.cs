@@ -1,7 +1,11 @@
-﻿using learning_asp.Data;
+﻿global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.EntityFrameworkCore;
+
+using learning_asp.Data;
 using learning_asp.Interface;
+using learning_asp.Model;
 using learning_asp.Service;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+// Database //
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
 // Dependency injection //
 
 // Singleton (Per server)
@@ -21,17 +33,10 @@ builder.Services.AddSingleton<ILog, ConsoleLogger>();
 // AddScoped (Per request)
 // AddScoped is for multiple instances per request
 // builder.Services.AddScoped<ILog, ConsoleLogger>();
+builder.Services.AddScoped<DealershipRepository, DealershipRepository>();
 
 // Transient (Per injections)
 // Transient is multiple instances per layer per request or injection
-
-
-// Database //
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseMySQL(connectionString); 
-});
 
 var app = builder.Build();
 

@@ -1,7 +1,5 @@
 ﻿
-using System;
 using learning_asp.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace learning_asp.Data
 {
@@ -10,6 +8,27 @@ namespace learning_asp.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){}
 
         public DbSet<Car> Cars { get; set; }
-	}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Car>().HasData(
+                new Car
+                {
+                    Id = 1,
+                    CarName = "Ford Fiesa",
+                    CarSku = "fordfiesta",
+                    CarColour = "Silver",
+                },
+                new Car
+                {
+                    Id = 2,
+                    CarName = "BMW M140",
+                    CarSku = "bmwm140",
+                    CarColour = "Grey",
+                }
+            ) ;
+        }
+
+    }
 }
 

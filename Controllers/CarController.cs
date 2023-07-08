@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.ConstrainedExecution;
+﻿using learning_asp.Data;
 using learning_asp.Interface;
 using learning_asp.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace learning_asp.Controllers
 {
@@ -11,20 +11,21 @@ namespace learning_asp.Controllers
 	public class CarController : ControllerBase
 	{
         private readonly ILog _logger;
+        private readonly DealershipRepository _dealershipRepository;
 
-		public CarController(ILog logger)
+        public CarController(DealershipRepository dealershipRepository, ILog logger)
 		{
             _logger = logger;
+            _dealershipRepository = dealershipRepository;
 		}
 
 		[HttpGet("All", Name = "GetCars")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<Car>> GetCars()
+        public async Task<ActionResult<IEnumerable<Car>>> GetCars()
 		{
             _logger.Log("GetCars");
-
-            return Ok(DealershipRepository.Cars);
+            return Ok(await _dealershipRepository.GetCars());
 		}
 
 		[HttpGet("{id:int}", Name = "GetCarById")]
@@ -36,10 +37,10 @@ namespace learning_asp.Controllers
 		{
             _logger.Log("GetCarById");
 
-            if (id <= 0) 
-				return BadRequest();
+            if (id <= 0)
+                return BadRequest();
 
-			Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.Id == id);
+            var car = _dealershipRepository.GetCarById(id);
 
 			if (car == null)
 				return NotFound($"Car {id} couldn't be found");
@@ -53,22 +54,21 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<Car> GetCarBySku(string sku)
-		{
-            _logger.Log("GetCarBySku");
+        {
+            _logger.Log("GetCarById");
 
-            if (string.IsNullOrEmpty(sku))
-				return BadRequest();
+            if (sku == null)
+                return BadRequest();
 
-            Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarSku == sku);
+            var car = _dealershipRepository.GetCarBySku(sku);
 
             if (car == null)
                 return NotFound($"Car {sku} couldn't be found");
 
-			return Ok(car);
+            return Ok(car);
+        }
 
-		}
-
-		[HttpDelete("{id:int}", Name = "DeleteCarById")]
+        [HttpDelete("{id:int}", Name = "DeleteCarById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -80,12 +80,12 @@ namespace learning_asp.Controllers
             if (id <= 0)
                 return BadRequest();
 
-            Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.Id == id);
+            var car = _dealershipRepository.GetCarById(id);
 
             if (car == null)
                 return NotFound($"Car {id} couldn't be found");
 
-            DealershipRepository.Cars.Remove(car);
+            _dealershipRepository.DeleteCar(car);
 
 			return Ok(car); 
 		}
@@ -94,14 +94,19 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<Car> CreateCar([FromBody]Car model)
+        public async Task<ActionResult<IEnumerable<Car>>> CreateCar([FromBody]Car model)
         {
             _logger.Log("CreateCar");
 
             if (model == null)
                 return BadRequest();
 
-            int carId = DealershipRepository.Cars.LastOrDefault().Id + 1;
+            int carId = _dealershipRepository.GetCarLastId();
+
+            if (carId == 0)
+                return BadRequest();
+
+            carId++;
 
             Car car = new Car
             {
@@ -111,9 +116,7 @@ namespace learning_asp.Controllers
                 CarSku = model.CarSku
             };
 
-            DealershipRepository.Cars.Add(car);
-
-            return Ok(true);
+            return Ok(await _dealershipRepository.CreateCar(car));
         }
 
     }

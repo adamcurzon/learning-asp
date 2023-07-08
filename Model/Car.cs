@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace learning_asp.Model
+﻿namespace learning_asp.Model
 {
 	public class Car
 	{
+		[Key]
 		public int Id { get; set; }
 
 		[Required]

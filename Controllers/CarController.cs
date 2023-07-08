@@ -14,13 +14,17 @@ namespace learning_asp.Controllers
 		}
 
 		[HttpGet("All", Name = "GetCars")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
 		public ActionResult<IEnumerable<Car>> GetCars()
 		{
 			return Ok(DealershipRepository.Cars);
 		}
 
 		[HttpGet("{id:int}", Name = "GetCarById")]
-		public ActionResult<Car> GetCarById(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Car> GetCarById(int id)
 		{
 			if (id <= 0) 
 				return BadRequest();
@@ -34,7 +38,10 @@ namespace learning_asp.Controllers
 		}
 
 		[HttpGet("{sku:alpha}", Name = "GetCarBySku")]
-		public ActionResult<Car> GetCarBySku(string sku)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Car> GetCarBySku(string sku)
 		{
 			if (string.IsNullOrEmpty(sku))
 				return BadRequest();
@@ -49,6 +56,9 @@ namespace learning_asp.Controllers
 		}
 
 		[HttpDelete("{id:int}", Name = "DeleteCarById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<bool> DeleteCarById(int id)
         {
             if (id <= 0)

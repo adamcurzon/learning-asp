@@ -5,13 +5,13 @@ namespace learning_asp.Model
 	{
         public static List<Car> Cars { get; set; } = new List<Car>(){
             new Car {
-                CarId = 1,
+                Id = 1,
                 CarName = "Ford Fiesa",
                 CarSku = "fordfiesta",
                 CarColour = "Silver",
             },
             new Car {
-                CarId = 2,
+                Id = 2,
                 CarName = "BMW M140",
                 CarSku = "bmwm140",
                 CarColour = "Grey",

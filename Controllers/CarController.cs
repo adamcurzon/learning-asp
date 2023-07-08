@@ -39,7 +39,7 @@ namespace learning_asp.Controllers
             if (id <= 0) 
 				return BadRequest();
 
-			Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarId == id);
+			Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.Id == id);
 
 			if (car == null)
 				return NotFound($"Car {id} couldn't be found");
@@ -80,7 +80,7 @@ namespace learning_asp.Controllers
             if (id <= 0)
                 return BadRequest();
 
-            Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarId == id);
+            Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.Id == id);
 
             if (car == null)
                 return NotFound($"Car {id} couldn't be found");
@@ -101,11 +101,11 @@ namespace learning_asp.Controllers
             if (model == null)
                 return BadRequest();
 
-            int carId = DealershipRepository.Cars.LastOrDefault().CarId + 1;
+            int carId = DealershipRepository.Cars.LastOrDefault().Id + 1;
 
             Car car = new Car
             {
-                CarId = carId,
+                Id = carId,
                 CarName = model.CarName,
                 CarColour = model.CarColour,
                 CarSku = model.CarSku

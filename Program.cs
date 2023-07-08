@@ -1,5 +1,7 @@
-﻿using learning_asp.Interface;
+﻿using learning_asp.Data;
+using learning_asp.Interface;
 using learning_asp.Service;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,14 @@ builder.Services.AddSingleton<ILog, ConsoleLogger>();
 
 // Transient (Per injections)
 // Transient is multiple instances per layer per request or injection
+
+
+// Database //
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseMySQL(connectionString); 
+});
 
 var app = builder.Build();
 

@@ -10,8 +10,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Dependency injection
-builder.Services.AddScoped<ILog, ConsoleLogger>();
+// Dependency injection //
+
+// Singleton (Per server)
+// Singleton is a single instance for all requests
+builder.Services.AddSingleton<ILog, ConsoleLogger>();
+
+// AddScoped (Per request)
+// AddScoped is for multiple instances per request
+// builder.Services.AddScoped<ILog, ConsoleLogger>();
+
+// Transient (Per injections)
+// Transient is multiple instances per layer per request or injection
 
 var app = builder.Build();
 

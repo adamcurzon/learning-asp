@@ -101,16 +101,18 @@ namespace learning_asp.Controllers
             if (model == null)
                 return BadRequest();
 
-            int carId = _dealershipRepository.GetCarLastId();
+            int? carId = _dealershipRepository.GetCarLastId();
 
-            if (carId == 0)
+            if (carId == null)
                 return BadRequest();
 
-            carId++;
+            int newCarId = carId.Value;
+            newCarId++;
+ 
 
             Car car = new Car
             {
-                Id = carId,
+                Id = newCarId,
                 CarName = model.CarName,
                 CarColour = model.CarColour,
                 CarSku = model.CarSku

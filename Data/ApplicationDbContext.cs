@@ -26,9 +26,8 @@ namespace learning_asp.Data
                     CarSku = "bmwm140",
                     CarColour = "Grey",
                 }
-            ) ;
+            );
         }
-
     }
 }
 

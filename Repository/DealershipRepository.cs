@@ -39,28 +39,16 @@ namespace learning_asp.Model
             return true;
         }
 
-        public int GetCarLastId() {
+        public int? GetCarLastId() {
             var lastCar = _context.Cars.LastOrDefault();
 
             if (lastCar == null)
-                return 0;
+                return null;
 
-            return lastCar.Id;
-        }
+            if (lastCar.Id.HasValue)
+                return lastCar.Id.Value;
 
-            //public static List<Car> Cars { get; set; } = new List<Car>(){
-            //    new Car {
-            //        Id = 1,
-            //        CarName = "Ford Fiesa",
-            //        CarSku = "fordfiesta",
-            //        CarColour = "Silver",
-            //    },
-            //    new Car {
-            //        Id = 2,
-            //        CarName = "BMW M140",
-            //        CarSku = "bmwm140",
-            //        CarColour = "Grey",
-            //    },
-            //};
+            return null;
         }
+    }
 }

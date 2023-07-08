@@ -3,21 +3,22 @@
 	public class Car
 	{
 		[Key]
-		public int Id { get; set; }
+        [Required]
+        public int? Id { get; set; }
 
 		[Required]
 		[StringLength(maximumLength: 100, MinimumLength = 2)]
-		public string CarName { get; set; }
+		public string? CarName { get; set; }
 
         [Required]
         [StringLength(maximumLength: 100, MinimumLength = 2)]
-        public string CarColour { get; set; }
+        public string? CarColour { get; set; }
 
         [Required]
         [StringLength(maximumLength: 100, MinimumLength = 2)]
-        public string CarSku { get; set; }
+        public string? CarSku { get; set; }
 
-        public Car()
+		public Car()
 		{
 		}
 	}

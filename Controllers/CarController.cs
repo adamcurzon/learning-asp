@@ -14,18 +14,12 @@ namespace learning_asp.Controllers
 
 		[HttpGet]
 		public IEnumerable<Car> GetCars() {
-			return new List<Car>(){
-				new Car {
-					CarId = 1,
-					CarName = "Ford Fiesa",
-					CarColour = "Silver",
-				},
-                new Car {
-                    CarId = 2,
-                    CarName = "BMW M140",
-                    CarColour = "Grey",
-                },
-            };
+			return DealershipRepository.Cars;
+		}
+
+		[HttpGet("{id:int}")]
+		public Car GetCar(int id) {
+			return DealershipRepository.Cars.Where(n => n.CarId == id).FirstOrDefault();
 		}
 	}
 }

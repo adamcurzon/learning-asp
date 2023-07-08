@@ -17,10 +17,5 @@ namespace learning_asp.Model
                 CarColour = "Grey",
             },
         };
-
-        public bool Remove() {
-
-            return true;
-        }
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.ConstrainedExecution;
 using learning_asp.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,29 +14,54 @@ namespace learning_asp.Controllers
 		}
 
 		[HttpGet("All", Name = "GetCars")]
-		public IEnumerable<Car> GetCars() {
-			return DealershipRepository.Cars;
+		public ActionResult<IEnumerable<Car>> GetCars()
+		{
+			return Ok(DealershipRepository.Cars);
 		}
 
 		[HttpGet("{id:int}", Name = "GetCarById")]
-		public Car GetCarById(int id)
+		public ActionResult<Car> GetCarById(int id)
 		{
-            return DealershipRepository.Cars.FirstOrDefault(n => n.CarId == id);
+			if (id <= 0) 
+				return BadRequest();
+
+			Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarId == id);
+
+			if (car == null)
+				return NotFound($"Car {id} couldn't be found");
+
+            return Ok(car);
 		}
 
 		[HttpGet("{sku:alpha}", Name = "GetCarBySku")]
-		public Car GetCarBySku(string sku)
+		public ActionResult<Car> GetCarBySku(string sku)
 		{
-            return DealershipRepository.Cars.FirstOrDefault(n => n.CarSku == sku);
+			if (string.IsNullOrEmpty(sku))
+				return BadRequest();
+
+            Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarSku == sku);
+
+            if (car == null)
+                return NotFound($"Car {sku} couldn't be found");
+
+			return Ok(car);
+
 		}
 
 		[HttpDelete("{id:int}", Name = "DeleteCarById")]
-        public bool DeleteCarById(int id)
+        public ActionResult<bool> DeleteCarById(int id)
         {
-            Car car = DealershipRepository.Cars.FirstOrDefault(n => n.CarId == id);
-			DealershipRepository.Cars.Remove(car);
+            if (id <= 0)
+                return BadRequest();
 
-			return true; 
+            Car? car = DealershipRepository.Cars.FirstOrDefault(n => n.CarId == id);
+
+            if (car == null)
+                return NotFound($"Car {id} couldn't be found");
+
+            DealershipRepository.Cars.Remove(car);
+
+			return Ok(true); 
 		}
 
     }

@@ -6,6 +6,7 @@ namespace learning_asp.Model
 		public int CarId { get; set; }
 		public string CarName { get; set; }
         public string CarColour { get; set; }
+		public string CarSku { get; set; }
 
         public Car()
 		{

@@ -90,7 +90,7 @@ namespace learning_asp.Controllers
 			return Ok(car); 
 		}
 
-        [HttpPost("Create", Name = "CreateCar")]
+        [HttpPost("", Name = "CreateCar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

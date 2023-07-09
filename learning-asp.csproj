@@ -29,7 +29,7 @@
     <None Remove="Interface\" />
     <None Remove="Service\" />
     <None Remove="Data\" />
-    <None Remove="Identity\" />
+    <None Remove="Options\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -38,6 +38,6 @@
     <Folder Include="Interface\" />
     <Folder Include="Service\" />
     <Folder Include="Data\" />
-    <Folder Include="Identity\" />
+    <Folder Include="Options\" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using learning_asp.Data;
-using learning_asp.Identity;
 using learning_asp.Interface;
 using learning_asp.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +72,7 @@ namespace learning_asp.Controllers
             return Ok(car);
         }
 
-        [Authorize(Policy = IdentityData.AdminUserPolicyName)]
+        [Authorize]
         [HttpDelete("{input}", Name = "DeleteCarById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -99,7 +98,7 @@ namespace learning_asp.Controllers
 			return Ok(car); 
 		}
 
-        [Authorize(Policy = IdentityData.AdminUserPolicyName)]
+        [Authorize]
         [HttpPost("", Name = "CreateCar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -9,7 +9,6 @@ A basic API written in ASP.net / C# for managing cars in a dealership. 🚗💨
 - `POST /api/User/` 🔐 Returns a JWT token (doesn't need credentials)
 - `GET /api/Car/All` Gets all cars
 - `GET /api/Car/{guid}` Gets a single car by guid
-- `GET /api/Car/{sku}` Gets a single car by sku
 
 ### Authorize
 - `DELETE /api/Car/{guid}` Deletes a single car by guid

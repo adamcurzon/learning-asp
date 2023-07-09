@@ -27,11 +27,6 @@ namespace learning_asp.Model
             return _context.Cars.Where(n => n.Id == id).FirstOrDefault();
         }
 
-        public Car? GetCarBySku(string sku)
-        {
-            return _context.Cars.Where(n => n.CarSku == sku).FirstOrDefault();
-        }
-
         public bool DeleteCar(Car car)
         {
             _context.Cars.Remove(car);

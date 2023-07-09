@@ -52,26 +52,6 @@ namespace learning_asp.Controllers
             return Ok(car);
 		}
 
-		[HttpGet("{sku:alpha}", Name = "GetCarBySku")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<Car> GetCarBySku(string sku)
-        {
-            _logger.Log("GetCarById");
-
-            if (sku == null)
-                return BadRequest();
-
-            var car = _dealershipRepository.GetCarBySku(sku);
-
-            if (car == null)
-                return NotFound($"Car {sku} couldn't be found");
-
-            return Ok(car);
-        }
-
         [Authorize]
         [HttpDelete("{input}", Name = "DeleteCarById")]
         [ProducesResponseType(StatusCodes.Status200OK)]

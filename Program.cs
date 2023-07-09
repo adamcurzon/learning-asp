@@ -8,6 +8,7 @@ using learning_asp.Model;
 using learning_asp.Service;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
 
@@ -18,7 +19,7 @@ builder.Services.AddSwaggerGen();
 
 
 // Database //
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = config.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));

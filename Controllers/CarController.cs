@@ -1,7 +1,9 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using learning_asp.Data;
+using learning_asp.Identity;
 using learning_asp.Interface;
 using learning_asp.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -71,10 +73,12 @@ namespace learning_asp.Controllers
             return Ok(car);
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicyName)]
         [HttpDelete("{input}", Name = "DeleteCarById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<Car> DeleteCarById(string input)
         {
@@ -95,6 +99,7 @@ namespace learning_asp.Controllers
 			return Ok(car); 
 		}
 
+        [Authorize(Policy = IdentityData.AdminUserPolicyName)]
         [HttpPost("", Name = "CreateCar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

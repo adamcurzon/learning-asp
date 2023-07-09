@@ -15,10 +15,10 @@ namespace learning_asp.Options
             _jwtOptions = jwtOptions.Value;
 		}
 
-		public void Configure(JwtBearerOptions options) {
+		public void Configure(string? name, JwtBearerOptions options) {
             options.TokenValidationParameters = new() {
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuer = true,
+                ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = _jwtOptions.Issuer, 
@@ -28,7 +28,7 @@ namespace learning_asp.Options
             };
 		}
 
-        public void Configure(string? name, JwtBearerOptions options)
+        public void Configure(JwtBearerOptions options)
         {
             // This will never be called
             throw new NotImplementedException();

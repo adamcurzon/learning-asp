@@ -15,7 +15,7 @@ namespace learning_asp.Data
                 new Car
                 {
                     Id = Guid.NewGuid(),
-                    CarName = "Ford Fiesa",
+                    CarName = "Ford Fiesta",
                     CarSku = "fordfiesta",
                     CarColour = "Silver",
                 },

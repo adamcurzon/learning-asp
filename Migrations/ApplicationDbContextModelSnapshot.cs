@@ -21,9 +21,9 @@ namespace learning_asp.Migrations
 
             modelBuilder.Entity("learning_asp.Model.Car", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("CarColour")
                         .IsRequired()
@@ -47,14 +47,14 @@ namespace learning_asp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("c48e470b-6d0c-4657-b0c1-7e82ca45bbf9"),
                             CarColour = "Silver",
                             CarName = "Ford Fiesa",
                             CarSku = "fordfiesta"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("2a52ccfe-9776-45be-a2ca-be04b6e6a6e8"),
                             CarColour = "Grey",
                             CarName = "BMW M140",
                             CarSku = "bmwm140"

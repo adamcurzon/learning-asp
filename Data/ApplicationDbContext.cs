@@ -14,14 +14,14 @@ namespace learning_asp.Data
             modelBuilder.Entity<Car>().HasData(
                 new Car
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     CarName = "Ford Fiesa",
                     CarSku = "fordfiesta",
                     CarColour = "Silver",
                 },
                 new Car
                 {
-                    Id = 2,
+                    Id = Guid.NewGuid(),
                     CarName = "BMW M140",
                     CarSku = "bmwm140",
                     CarColour = "Grey",

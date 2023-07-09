@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -20,8 +20,7 @@ namespace learning_asp.Migrations
                 name: "Cars",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CarName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CarColour = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
@@ -40,8 +39,8 @@ namespace learning_asp.Migrations
                 columns: new[] { "Id", "CarColour", "CarName", "CarSku" },
                 values: new object[,]
                 {
-                    { 1, "Silver", "Ford Fiesa", "fordfiesta" },
-                    { 2, "Grey", "BMW M140", "bmwm140" }
+                    { new Guid("2a52ccfe-9776-45be-a2ca-be04b6e6a6e8"), "Grey", "BMW M140", "bmwm140" },
+                    { new Guid("c48e470b-6d0c-4657-b0c1-7e82ca45bbf9"), "Silver", "Ford Fiesa", "fordfiesta" }
                 });
         }
 

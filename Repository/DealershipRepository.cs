@@ -23,7 +23,7 @@ namespace learning_asp.Model
             return CreatedAtAction("GetCar", new { id = car.Id }, car);
         }
 
-        public Car? GetCarById(int id) {
+        public Car? GetCarById(Guid id) {
             return _context.Cars.Where(n => n.Id == id).FirstOrDefault();
         }
 
@@ -37,18 +37,6 @@ namespace learning_asp.Model
             _context.Cars.Remove(car);
             _context.SaveChanges();
             return true;
-        }
-
-        public int? GetCarLastId() {
-            var lastCar = _context.Cars.OrderBy(e => e.Id).LastOrDefault();
-
-            if (lastCar == null)
-                return null;
-
-            if (lastCar.Id.HasValue)
-                return lastCar.Id.Value;
-
-            return null;
         }
     }
 }

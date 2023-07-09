@@ -1,4 +1,5 @@
-﻿using learning_asp.Data;
+﻿using Google.Protobuf.WellKnownTypes;
+using learning_asp.Data;
 using learning_asp.Interface;
 using learning_asp.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -28,22 +29,24 @@ namespace learning_asp.Controllers
             return Ok(await _dealershipRepository.GetCars());
 		}
 
-		[HttpGet("{id:int}", Name = "GetCarById")]
+		[HttpGet("{input}", Name = "GetCarById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<Car> GetCarById(int id)
+        public ActionResult<Car> GetCarById(string input)
 		{
             _logger.Log("GetCarById");
 
-            if (id <= 0)
+            Guid guid;
+
+            if (!Guid.TryParse(input, out guid))
                 return BadRequest();
 
-            var car = _dealershipRepository.GetCarById(id);
+            var car = _dealershipRepository.GetCarById(guid);
 
 			if (car == null)
-				return NotFound($"Car {id} couldn't be found");
+				return NotFound($"Car {guid} couldn't be found");
 
             return Ok(car);
 		}
@@ -68,22 +71,24 @@ namespace learning_asp.Controllers
             return Ok(car);
         }
 
-        [HttpDelete("{id:int}", Name = "DeleteCarById")]
+        [HttpDelete("{input}", Name = "DeleteCarById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<Car> DeleteCarById(int id)
+        public ActionResult<Car> DeleteCarById(string input)
         {
             _logger.Log("DeleteCarById");
 
-            if (id <= 0)
+            Guid guid;
+
+            if (!Guid.TryParse(input, out guid))
                 return BadRequest();
 
-            var car = _dealershipRepository.GetCarById(id);
+            var car = _dealershipRepository.GetCarById(guid);
 
             if (car == null)
-                return NotFound($"Car {id} couldn't be found");
+                return NotFound($"Car {guid} couldn't be found");
 
             _dealershipRepository.DeleteCar(car);
 
@@ -101,18 +106,12 @@ namespace learning_asp.Controllers
             if (model == null)
                 return BadRequest();
 
-            int? carId = _dealershipRepository.GetCarLastId();
+            Guid carGuid = Guid.NewGuid();
 
-            if (carId == null)
-                return BadRequest();
-
-            int newCarId = carId.Value;
-            newCarId++;
- 
 
             Car car = new Car
             {
-                Id = newCarId,
+                Id = carGuid,
                 CarName = model.CarName,
                 CarColour = model.CarColour,
                 CarSku = model.CarSku

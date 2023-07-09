@@ -4,7 +4,7 @@
 	{
 		[Key]
         [Required]
-        public int? Id { get; set; }
+        public Guid? Id { get; set; }
 
 		[Required]
 		[StringLength(maximumLength: 100, MinimumLength = 2)]

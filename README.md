@@ -27,4 +27,4 @@ A basic API written in ASP.net/C# for managing cars from a dealership.
 
 2. Ensure a secure secret key is added that is 16 characters or longer.
 
-3. TODO: In production these will nee to be moved somewhere more secure. 
+3. TODO: In production these will nee to be moved somewhere more secure.

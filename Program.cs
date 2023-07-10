@@ -6,6 +6,7 @@ using learning_asp.Data;
 using learning_asp.Interface;
 using learning_asp.Model;
 using learning_asp.Options;
+using learning_asp.Repository;
 using learning_asp.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -37,6 +38,7 @@ builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
 // AddScoped (Per request)
 // AddScoped is for multiple instances per request
 builder.Services.AddScoped<DealershipRepository, DealershipRepository>();
+builder.Services.AddScoped<UserRepository, UserRepository>();
 
 // Transient (Per injections)
 // Transient is multiple instances per layer per request or injection

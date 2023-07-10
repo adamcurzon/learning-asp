@@ -6,7 +6,7 @@ A basic API written in ASP.net / C# for managing cars in a dealership. 🚗💨
 ## ✅ Current functionality
 
 ### Public
-- `POST /api/User/` 🔐 Returns a JWT token (doesn't need credentials)
+- `POST /api/User/` 🔐 Login & get JWT token
 - `GET /api/Car/All` Gets all cars
 - `GET /api/Car/{guid}` Gets a single car by guid
 
@@ -41,3 +41,5 @@ A basic API written in ASP.net / C# for managing cars in a dealership. 🚗💨
 🤔 [JWT Issues](https://www.reddit.com/r/dotnet/comments/11dekla/jwt_token_not_being_authorized_by_authorize/)
 
 💿 [EF Core](https://www.youtube.com/watch?v=39rSVOScx9c)
+
+🤐 [BCrypt](https://www.youtube.com/watch?v=UwruwHl3BlU)

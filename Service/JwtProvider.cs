@@ -18,7 +18,9 @@ namespace learning_asp.Service
 		}
 
 		public string Generate(string input) {
-			var claims = new Claim[] { };
+			var claims = new Claim[] {
+				new Claim(JwtRegisteredClaimNames.Email, input),
+			};
 			    
 			var signingCredentials = new SigningCredentials(
 				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)),

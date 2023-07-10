@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using learning_asp.Interface;
 using learning_asp.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace learning_asp.Controllers
 {
@@ -27,15 +28,22 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<string> Login(string email, string password)
         {
-            var user = _userRepository.GetUserByEmail(email);
+            try
+            {
+                var user = _userRepository.GetUserByEmail(email);
 
-            if (user == null)
-                return NotFound();
+                if (user == null)
+                    return NotFound();
 
-            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
-                return BadRequest();
+                if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+                    return BadRequest();
 
-            return Ok(_jwtProvider.Generate(email));
+                return Ok(_jwtProvider.Generate(email));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

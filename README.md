@@ -14,6 +14,11 @@ A basic API written in ASP.net / C# for managing cars in a dealership. 🚗💨
 - `DELETE /api/Car/{guid}` Deletes a single car by guid
 - `POST /api/Car/` Creates a car
 
+#### Seed User Credentials
+✉️ Email: `adam@example.com`
+
+🔑 Password: `password`
+
 ## ⚙️ Setup
 
 ### 📂 Setting up MySQL

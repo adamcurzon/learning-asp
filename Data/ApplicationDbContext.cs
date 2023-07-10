@@ -1,5 +1,6 @@
 ﻿
 using learning_asp.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace learning_asp.Data
 {
@@ -11,6 +12,15 @@ namespace learning_asp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = Guid.NewGuid(),
+                    Email = "adam@example.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("password"),
+                }
+            );
+
             modelBuilder.Entity<Car>().HasData(
                 new Car
                 {

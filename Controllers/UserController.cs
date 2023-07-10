@@ -20,7 +20,11 @@ namespace learning_asp.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpPost(Name = "Login")] 
+        [HttpPost(Name = "Login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<string> Login(string email, string password)
         {
             var user = _userRepository.GetUserByEmail(email);
@@ -31,9 +35,7 @@ namespace learning_asp.Controllers
             if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 return BadRequest();
 
-            string token = _jwtProvider.Generate(email);
-
-            return token;
+            return Ok(_jwtProvider.Generate(email));
         }
     }
 }

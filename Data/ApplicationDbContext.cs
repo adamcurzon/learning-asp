@@ -18,6 +18,7 @@ namespace learning_asp.Data
                 {
                     Id = Guid.NewGuid(),
                     Email = "adam@example.com",
+                    Name = "Adam Curzon",
                     Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 }
             );
@@ -29,6 +30,8 @@ namespace learning_asp.Data
                     CarName = "Ford Fiesta",
                     CarSku = "fordfiesta",
                     CarColour = "Silver",
+                    CarEngineSize = "1.1",
+                    CarEngineType = "Petrol",
                 },
                 new Car
                 {
@@ -36,6 +39,17 @@ namespace learning_asp.Data
                     CarName = "BMW M140",
                     CarSku = "bmwm140",
                     CarColour = "Grey",
+                    CarEngineSize = "3.0",
+                    CarEngineType = "Petrol",
+                },
+                new Car
+                {
+                    Id = Guid.NewGuid(),
+                    CarName = "Land Rover",
+                    CarSku = "lrg",
+                    CarColour = "Green",
+                    CarEngineSize = "2.2",
+                    CarEngineType = "Diesel",
                 }
             );
         }

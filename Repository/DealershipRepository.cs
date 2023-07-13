@@ -14,13 +14,13 @@ namespace learning_asp.Model
         }
 
         public async Task<ActionResult<List<Car>>> GetCars() {
-            return await _context.Cars.ToListAsync();
+            return await _context.Cars.OrderByDescending(i => i.CreatedDate).ToListAsync();
         }
 
-        public async Task<ActionResult<List<Car>>> CreateCar(Car car) {
+        public async Task<bool> CreateCar(Car car) {
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetCar", new { id = car.Id }, car);
+            return true;
         }
 
         public Car? GetCarById(Guid id) {
@@ -32,6 +32,10 @@ namespace learning_asp.Model
             _context.Cars.Remove(car);
             _context.SaveChanges();
             return true;
+        }
+
+        public int GetTotalCars() {
+            return _context.Cars.Count();
         }
     }
 }

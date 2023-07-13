@@ -83,7 +83,7 @@ namespace learning_asp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Car>>> CreateCar([FromBody]Car model)
+        public async Task<ActionResult<Car>> CreateCar([FromBody]Car model)
         {
             _logger.Log("CreateCar");
 
@@ -98,10 +98,18 @@ namespace learning_asp.Controllers
                 Id = carGuid,
                 CarName = model.CarName,
                 CarColour = model.CarColour,
+                CarEngineSize = model.CarEngineSize,
+                CarEngineType = model.CarEngineType,
                 CarSku = model.CarSku
             };
 
-            return Ok(await _dealershipRepository.CreateCar(car));
+            var created = await _dealershipRepository.CreateCar(car);
+
+            if (created != true) {
+                return StatusCode(500);
+            }
+
+            return CreatedAtAction("CreateCar", car);
         }
 
     }

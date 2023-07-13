@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Options;
+using learning_asp.Model;
 
 namespace learning_asp.Service
 {
@@ -17,9 +18,10 @@ namespace learning_asp.Service
 			_jwtOptions = jwtOptions.Value;
 		}
 
-		public string Generate(string input) {
+		public string Generate(User input) {
 			var claims = new Claim[] {
-				new Claim(JwtRegisteredClaimNames.Email, input),
+				new Claim(JwtRegisteredClaimNames.Email, input.Email),
+				new Claim("name", input.Name)
 			};
 			    
 			var signingCredentials = new SigningCredentials(
